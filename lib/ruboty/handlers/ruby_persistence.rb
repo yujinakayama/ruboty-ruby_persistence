@@ -33,6 +33,7 @@ module Ruboty
         name = message[:name]
 
         if variables[name]
+          undefine_variable(name)
           variables.delete(name)
           message.reply("`#{name}` is now unset")
         else
@@ -56,6 +57,10 @@ module Ruboty
         message.reply("`#{name}` is now `#{result.inspect}`")
       rescue Exception => exception
         message.reply("#{exception.class}: #{exception}")
+      end
+
+      def undefine_variable(name)
+        context.singleton_class.__send__(:undef_method, name)
       end
 
       def variables
