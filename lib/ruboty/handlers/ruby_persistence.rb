@@ -50,7 +50,7 @@ module Ruboty
 
       def set_and_persist(message)
         name = message[:name]
-        result = eval(message[:code])
+        result = context.instance_eval(message[:code])
         context.__send__(:define_method, name) { result }
         variables[name] = result
         message.reply("`#{name}` is now `#{result.inspect}`")
