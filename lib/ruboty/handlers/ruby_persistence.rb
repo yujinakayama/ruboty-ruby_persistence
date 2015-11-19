@@ -51,9 +51,9 @@ module Ruboty
       def set_and_persist(message)
         name = message[:name]
         result = eval(message[:code])
-        context.define_method(name) { result }
+        context.__send__(:define_method, name) { result }
         variables[name] = result
-        message.reply("`#{name}` is now `#{result.to_inspect}`")
+        message.reply("`#{name}` is now `#{result.inspect}`")
       rescue Exception => exception
         message.reply("#{exception.class}: #{exception}")
       end
