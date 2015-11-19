@@ -1,7 +1,9 @@
-require "ruboty/ruby_persistence/version"
-
 module Ruboty
   module RubyPersistence
-    # Your code goes here...
   end
 end
+
+Ruboty::RubyPersistence::MainContext = self
+
+require 'ruboty/handlers/ruby_persistence'
+require 'ruboty/ruby_persistence/version'
