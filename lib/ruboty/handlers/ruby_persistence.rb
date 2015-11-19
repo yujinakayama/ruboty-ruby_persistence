@@ -12,7 +12,7 @@ module Ruboty
       )
 
       on(
-        /ruby-unset (?<name>)/m,
+        /ruby-unset (?<name>.+)/m,
         description: 'Unset persisted Ruby variable',
         name: 'unset',
       )
