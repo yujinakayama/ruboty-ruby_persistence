@@ -17,6 +17,12 @@ module Ruboty
         name: 'undefine',
       )
 
+      on(
+        /list ruby-definitions\z/,
+        description: 'List all persisted Ruby variables',
+        name: 'list'
+      )
+
       def initialize(*)
         super
         restore
@@ -42,6 +48,14 @@ module Ruboty
         else
           message.reply("Error: No such variable `#{name}`")
         end
+      end
+
+      def list(message)
+        summary = variables.map do |name, value|
+          "#{name}: #{value.inspect}"
+        end.join("\n")
+
+        message.reply(summary, code: true)
       end
 
       private
