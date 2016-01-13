@@ -6,15 +6,15 @@ module Ruboty
       NAMESPACE = 'ruby_persistence'.freeze
 
       on(
-        /ruby-set (?<name>.+?) (?<code>.+)/m,
-        description: 'Set persisted Ruby variable',
-        name: 'set',
+        /ruby-define (?<name>.+?) (?<code>.+)/m,
+        description: 'Define persisted Ruby variable',
+        name: 'define',
       )
 
       on(
-        /ruby-unset (?<name>.+)/m,
-        description: 'Unset persisted Ruby variable',
-        name: 'unset',
+        /ruby-undefine (?<name>.+)/m,
+        description: 'Undefine persisted Ruby variable',
+        name: 'undefine',
       )
 
       def initialize(*)
@@ -22,7 +22,7 @@ module Ruboty
         restore
       end
 
-      def set(message)
+      def define(message)
         name = message[:name]
 
         if !variables.key?(name) && (method = predefined_method(name))
@@ -32,13 +32,13 @@ module Ruboty
         end
       end
 
-      def unset(message)
+      def undefine(message)
         name = message[:name]
 
         if variables[name]
           undefine_variable(name)
           variables.delete(name)
-          message.reply("`#{name}` is now unset")
+          message.reply("`#{name}` is now undefined")
         else
           message.reply("Error: No such variable `#{name}`")
         end
